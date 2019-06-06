@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = graqa
 TEMPLATE = app
@@ -33,6 +33,8 @@ HEADERS += \
 
 FORMS += \
         graqa.ui
+
+LIBS += -lqcustomplot
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
