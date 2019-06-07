@@ -2,7 +2,9 @@
 #define GRAQA_H
 
 #include <QMainWindow>
+#include <qmath.h>
 #include <qcustomplot.h>
+#include <iostream>
 
 namespace Ui {
 class MainWindow;

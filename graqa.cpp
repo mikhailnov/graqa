@@ -16,13 +16,31 @@ MainWindow::~MainWindow()
 
 void MainWindow::makePlot()
 {
-    // generate some data:
-    QVector<double> x(101), y(101); // initialize with entries 0..100
-    for (int i=0; i<101; ++i)
+    const int num=505; // кол-во точек для построения графика
+    const float x_step=0.1;
+
+    int k=1;
+    QVector<double> x(num), y(num);
+    x[0] = 0.0;
+    double sum_k=0.0;
+    for (int i=0; i<num; i++)
     {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = x[i]*x[i]; // let's plot a quadratic function
+        for (int i=0; i<k; i++)
+        {
+            sum_k += (qPow(-1, k+1))*qCos(k*x[i])/(qPow(2*k, 2)-1);
+        }
+        y[i] = (4/M_PI)*(0.5+sum_k);
+        std::cout << "x[" << i << "] = " << x[i] << " :: "
+                  << "y[" << i << "] = " << y[i] << " :: "
+                  << "k = " << k << " :: "
+                  << "sum_k = " << sum_k
+                  << "\n";
+        if ((i+1) < num) {
+            x[i+1] = x[i]+x_step;
+        }
+        k++;
     }
+
     // create graph and assign data to it:
     ui->customPlot->addGraph();
     ui->customPlot->graph(0)->setData(x, y);
@@ -30,7 +48,7 @@ void MainWindow::makePlot()
     ui->customPlot->xAxis->setLabel("x");
     ui->customPlot->yAxis->setLabel("y");
     // set axes ranges, so we see all data:
-    ui->customPlot->xAxis->setRange(-1, 1);
-    ui->customPlot->yAxis->setRange(0, 1);
+    //ui->customPlot->xAxis->setRange(-1, 1);
+    ui->customPlot->yAxis->setRange(0.89, 1.08);
     ui->customPlot->replot();
 }
